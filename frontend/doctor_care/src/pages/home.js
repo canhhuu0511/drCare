@@ -9,6 +9,7 @@ import { SliderDoctor } from "../components/slider/slider_doctor";
 import { HomeBanner } from "../components/home_banner";
 import { SliderBlog } from "../components/slider/slider_blog";
 import { SliderClinic } from "../components/slider/slider_clinic";
+import { Footer } from "../components/footer";
 
 export const HomePage = () => {
 
@@ -22,6 +23,8 @@ export const HomePage = () => {
       <SliderDoctor/>
       <SliderClinic/>
       <div style={{height:"100px"}}></div>
+      <Footer />
+
     </div>
   );
 };

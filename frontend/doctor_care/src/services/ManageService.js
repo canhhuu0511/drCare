@@ -101,6 +101,21 @@ export class ManageService {
       method: "GET",
     });
   }
+  getNews = () =>{
+    return axios({
+      url: `${domain}/news/`,
+      method: "GET"
+    })
+  }
+  getDetailOfNew = (url) =>{
+    return axios({
+      url: `${domain}/news/detail?url=${url}`,
+      method: "GET",
+      headers:{
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      }
+    })
+  }
  
 }
 export const manageService = new ManageService();

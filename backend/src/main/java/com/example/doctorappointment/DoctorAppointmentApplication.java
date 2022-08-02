@@ -54,16 +54,15 @@ public class DoctorAppointmentApplication {
             userService.saveUser(new UserEntity(0, "danh@gmail.com", "1234", true, null));
             userService.addRoleToUser("danh@gmail.com", Config.ROLE.ADMIN.getValue());
             List<String> systom1 = new ArrayList<>();
-            systom1.add("gãy Chân");
-            systom1.add("Nhức");
+            systom1.add("Khám chữa bệnh gãy chân");
+            systom1.add("Nhức mỏi xương khớp");
             systom1.add("đau vai gáy");
-            systom1.add("xương khớp");
-            systom1.add("Thoát vị");
-            systom1.add("Mỏi");
-            systom1.add("Tay");
+            systom1.add("Thoát vị dĩa đệm");
+            systom1.add("Khám chữa bệnh gãy tay");
             List<String> systom2 = new ArrayList<>();
-            systom2.add("đau Đầu");
-            systom2.add("Thần kinh tọa");
+            systom2.add("Chứng đau nữa đầu");
+            systom2.add("có chiệu trứng trầm cảm");
+            systom2.add("mắc chứng tự kỷ");
 
 //            ClinicMarkdownEntity clinicMarkdownEntity = new ClinicMarkdownEntity(0,"","","","",0);
             ClinicEntity clinic = clinicRepo.save(new ClinicEntity(0, "Bệnh viện Hữu nghị Việt Đức", "addreess", null, "https://cdn.bookingcare.vn/fr/w300/2019/12/13/121042-than-kinh.jpg",0,new ArrayList<SpecialtyEntity>()));

@@ -10,7 +10,6 @@ export const PatientTemplate = () => {
     <div style={{position:'relative',minHeight:"100vh"}}>
       <Navbar />
       <Outlet />
-      <Footer />
     </div>
   );
 };
