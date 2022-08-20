@@ -27,14 +27,12 @@ export const MarkdownSpecialty = () => {
     // Initialize a markdown parser
     const mdParser = new MarkdownIt(/* Markdown-it options */);
   
-    console.log(options);
   
     useEffect(  () => {
       async function fetchData(){
          manageService
         .getListOfSpecialty()
         .then( async (result) =>  {
-          console.log(result.data.data[0]);
           let data = result.data.data.map((e) => {
             return {
               value: e,
@@ -43,10 +41,17 @@ export const MarkdownSpecialty = () => {
           });
           setSpecialtySelected(result.data.data[0]);
           setOptions(data);
+          console.log(result.data.data[0].id);
           await manageService
             .getSpecialtyMarkdown(result.data.data[0].id)
             .then((result) => {
-              setExist(true);
+              if(result.data.specialtyId===0){
+                console.log(result.data)
+                setExist(false);
+              }else{
+                console.log(result)
+                setExist(true);
+              }
               setMarkdown(result.data);
             })
             .catch((err) =>
@@ -62,7 +67,6 @@ export const MarkdownSpecialty = () => {
       fetchData();
       return () => {};
     }, []);
-    console.log("specialty select",markdown);
 
   
     // Finish!
@@ -74,7 +78,7 @@ export const MarkdownSpecialty = () => {
         ["contentMarkdown"]: text,
       });
     }
-  
+
     const handleSubmit = () => {
       if(exist){
         manageService
@@ -90,6 +94,8 @@ export const MarkdownSpecialty = () => {
           }, 2000);
         });
       }else{
+        setMarkdown({...markdown,["specialtyId"]:specialtySelected.id});
+        console.log(markdown);
         manageService
         .addSpecialtyMarkdown(markdown)
         .then((result) => {
@@ -104,17 +110,21 @@ export const MarkdownSpecialty = () => {
         });
       }
     };
+    console.log(specialtySelected);
   
     const handleSelectChange = (selectedOption) => {
-      console.log("select ", selectedOption);
       setSpecialtySelected(selectedOption.value);
       manageService
         .getSpecialtyMarkdown(selectedOption.value.id)
         .then((result) => {
-          console.log(">>>>>result", result);
           if (result.data !== "") {
             setMarkdown(result.data);
-            setExist(true);
+            if(result.data.specialtyId===0){
+              console.log(result.data.specialtyId)
+              setExist(false);
+            }else{
+              setExist(true);
+            }
           } else {
             setMarkdown({
               id: 0,
@@ -125,10 +135,18 @@ export const MarkdownSpecialty = () => {
               specialtyId: selectedOption.value.id,
               clinicId: 0,
             });
-            setExist(false);
+            
           }
         })
-        .catch((err) => alert(err));
+        .catch((err) =>{setExist(false);setMarkdown({
+          id: 0,
+          contentHTML: "",
+          contentMarkdown: "",
+          description: "",
+          doctorId: 0,
+          specialtyId: selectedOption.value.id,
+          clinicId: 0,
+        });});
     };
   
     return (

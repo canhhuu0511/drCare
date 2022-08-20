@@ -7,8 +7,10 @@ export const BlogCard = ({ aNew }) => {
   const handleSubmit = () => {
     let link = aNew.link;
     let link_short = link.slice(link.indexOf(".net/")+5,link.indexOf("html")+4);
-    navigate(`/b/${link_short}`, { state: { url: link,pubDate:aNew.pubDate } });
+    let date = aNew.pubDate;
+    navigate(`/b/${link_short}`, { state: { url: link,date_time:date } });
   };
+
 
   return (
     <div style={{ border: "none" }} className="card">

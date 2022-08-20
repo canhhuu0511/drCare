@@ -3,6 +3,7 @@ package com.example.doctorappointment.service.impl;
 import com.example.doctorappointment.DTO.clinic.ClinicDTO;
 import com.example.doctorappointment.DTO.clinic.ClinicReadDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorDTO;
+import com.example.doctorappointment.DTO.doctor.DoctorReadDTO;
 import com.example.doctorappointment.DTO.specialty.SpecialtyDTO;
 import com.example.doctorappointment.DTO.specialty.SpecialtyReadDTO;
 import com.example.doctorappointment.entity.ClinicEntity;
@@ -115,6 +116,17 @@ public class ClinicServiceImpl implements ClinicService {
                 .collect(Collectors.toList());
         return dataResult;
     }
+
+    @Override
+    public List<ClinicReadDTO> findTop5() {
+        List<ClinicEntity> data = clinicRepo.findTop5ByOrderByNameAscIdDesc();
+        List<ClinicReadDTO> dataResult = data.stream()
+                .map(clinic -> convertEntityToDTO(clinic))
+                .collect(Collectors.toList());
+        return dataResult;
+    }
+
+
 
 
     private ClinicReadDTO convertEntityToDTO(ClinicEntity clinic) {

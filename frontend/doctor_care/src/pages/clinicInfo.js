@@ -28,7 +28,7 @@ export const ClinicPage = () => {
             .then((e) => {
               setSpecialties(e.data.data);
             })
-            .catch((err) => alert(err));
+            .catch((err) => console.log(err));
         })
         .catch((err) => console.log(err));
     };
@@ -66,7 +66,7 @@ export const ClinicPage = () => {
                 />
                 <div className="clinic-info">
                   <h1 className="clinic-name">{clinic.name}</h1>
-                  <p className="clinic-address">clinic address</p>
+                  <p className="clinic-address">{clinic.address}</p>
                 </div>
               </div>
               <div className="clinic-booking-btn">
@@ -232,6 +232,34 @@ export const ClinicPage = () => {
                 </ol>
               </div>
             </div>
+            <div id="themanh">
+              <div className="clinic-main-content-title">
+                <h2>Thế mạnh chuyên môn</h2>
+              </div>
+              <div className="clinic-main-content-detail">
+                 <p style={{textAlign: 'justify'}}>Bệnh viện Việt Đức là bệnh viện chuyên khoa Ngoại (phẫu thuật),có thế mạnh về khám, điều trị và Phẫu thuật nhiều chuyên khoa. Một số thế mạnh của Bệnh viện Việt Đức là:</p>
+                 <ul style={{textAlign: 'justify'}}>
+                  <li style={{textAlign: 'justify'}}>Khám, điều trị, phẫu thuật về Thần kinh</li>
+                  <li>Khám, điều trị, phẫu thuật về Cơ xương khớp</li>
+                  <li>Khám, điều trị, phẫu thuật về Cột sống</li>
+                  <li>Khám, điều trị, phẫu thuật về Tiêu hóa</li>
+                  <li>Khám, điều trị, phẫu thuật về Gan mật</li>
+                  <li>Khám, điều trị, phẫu thuật về Nam học</li>
+                  </ul>
+                  <p style={{textAlign: 'justify'}}>Là bệnh viện đi đầu về Phẫu thuật ở nước ta, các bác sĩ đã thực hiện thành công rất nhiều ca phẫu thuật khó.</p>
+                  <ul style={{textAlign: 'justify'}}>
+                  <li>
+                  <strong> Phẫu thuật tim mạch:&nbsp; </strong> 
+                  Mổ tim mở được tiến hành thường quy, tiến hành các kỹ thuật tim mạch khó, thay van tim, kỹ thuật Bentall, bắc cầu mạch vành, mổ nối mạch ở tim đang đập.
+                  </li>
+                  <li style={{textAlign: 'justify'}}><strong>Phẫu thuật Thần kinh:&nbsp;</strong>Mổ chấn thương sọ não, bệnh ở não - tuỷ sống, mổ u tuyến yên qua xoang bướm, mổ u thần kinh VIII qua mê nhĩ có sử dụng dao siêu âm.
+                  </li>
+                  <li style={{textAlign: 'justify'}}>
+                  <strong>Phẫu thuật Nội soi và nội soi can thiệp:&nbsp;</strong>Các loại phẫu thuật nội soi ổ bụng cắt túi mật, cắt u tuyến thượng thận, cắt dây thần kinh X, u nang buồng trứng, cắt lách, cắt ruột thừa bằng nội soi an toàn, tai biến ít, giảm ngày điều trị, phục hồi sau mổ nhanh.</li>
+                  <li style={{textAlign: 'justify'}}><strong>Phẫu thuật gan mật tuỵ:&nbsp;</strong>Cắt gan các loại do ung thư, bệnh gan mật và chấn thương; Các phẫu thuật về biến chứng chảy máu do xơ gan - tǎng áp lực tĩnh mạch cửa&nbsp;</li><li style={{textAlign: 'justify'}}><strong>Phẫu thuật Chấn thương chỉnh hình:&nbsp;</strong>Các loại chấn thương, thay khớp háng một bên hay toàn bộ, nội soi khớp.</li><li style={{textAlign: 'justify'}}><strong>Phẫu thuật tiêu hoá:&nbsp;</strong>Các kỹ thuật khó phức tạp như cắt bỏ và tạo hình thực quản, cắt khối tá tuỵ, cắt toàn bộ dạ dày, cắt đại tràng các loại.</li></ul><p style={{textAlign: 'justify'}}><strong>Cụ thể, bệnh viện nhận khám các vấn đề về:</strong></p><ul><li style={{textAlign: 'justify'}}>Bệnh lý thần kinh</li><li style={{textAlign: 'justify'}}>Nội - Hồi sức thần kinh</li><li style={{textAlign: 'justify'}}>Bệnh tim mạch và lồng ngực</li><li style={{textAlign: 'justify'}}>Phẫu thuật tim mạch - lồng ngực</li><li style={{textAlign: 'justify'}}>Ngoại nhi và trẻ sơ sinh</li><li style={{textAlign: 'justify'}}>Bệnh lý tiêu hóa</li><li style={{textAlign: 'justify'}}>Phẫu thuật tiêu hóa</li><li style={{textAlign: 'justify'}}>Bệnh cột sống/thoát vị đĩa đệm</li><li style={{textAlign: 'justify'}}>Chi trên và y học&nbsp; thể thao</li><li style={{textAlign: 'justify'}}>Bệnh lý chi dưới</li><li style={{textAlign: 'justify'}}>Khám xương và điều trị ngoại trú</li><li style={{textAlign: 'justify'}}>Phẫu thuật chấn thương chung</li><li style={{textAlign: 'justify'}}>Phẫu thuật tạo hình - hàm mặt - thẩm mỹ</li><li style={{textAlign: 'justify'}}>Phục hồi chức năng</li><li style={{textAlign: 'justify'}}>Nhiễm khuẩn</li><li style={{textAlign: 'justify'}}>Phẫu thuật nhiễm khuẩn</li><li style={{textAlign: 'justify'}}>Bệnh đường tiết niệu</li><li style={{textAlign: 'justify'}}>Bệnh nam học/nam khoa</li><li style={{textAlign: 'justify'}}>Bệnh lý gan mật</li><li style={{textAlign: 'justify'}}>Ung bướu</li><li style={{textAlign: 'justify'}}>Thận lọc máu</li><li style={{textAlign: 'justify'}}>Bệnh lý hậu môn trực tràng</li><li style={{textAlign: 'justify'}}>Trung tâm ghép tạng</li><li style={{textAlign: 'justify'}}>Phòng khám Tai mũi họng</li></ul>
+              </div>
+            </div>
+            
           </div>
         </div>
       </div>

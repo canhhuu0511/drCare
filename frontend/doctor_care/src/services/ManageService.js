@@ -111,9 +111,9 @@ export class ManageService {
     return axios({
       url: `${domain}/news/detail?url=${url}`,
       method: "GET",
-      headers:{
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      }
+      // headers:{
+      //   Authorization: "Bearer " + localStorage.getItem("token"),
+      // }
     })
   }
  

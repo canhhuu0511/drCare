@@ -75,8 +75,9 @@ public class SpecialtyController {
 
     @GetMapping("/markdown/{specialtyId}")
     public ResponseEntity<MarkdownEntity> getMarkdownWithDoctorId(@PathVariable int specialtyId){
-        System.out.println(specialtyId);
+        if(markdownRepo.findBySpecialtyId(specialtyId)!=null)
         return  ResponseEntity.ok().body(markdownRepo.findBySpecialtyId(specialtyId));
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/markdown")
@@ -95,8 +96,9 @@ public class SpecialtyController {
             updateMarkdown.setDescription(newMarkdown.getDescription());
 
             return ResponseEntity.status(HttpStatus.OK).body(new Message(new Date(),"ok","update successful",markdownRepo.save(updateMarkdown)));
+        }else{
+            return ResponseEntity.status(HttpStatus.OK).body(new Message(new Date(),"ok","create successful",markdownRepo.save(newMarkdown)));
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Message(new Date(),"not found","can not find markdown with doctorId "+specialtyId,""));
     }
     @PostMapping("/search")
     public ResponseEntity<Message> search(@RequestBody SearchInputDTO systom){

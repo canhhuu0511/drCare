@@ -12,7 +12,8 @@ export const HomeBanner = () => {
   const [initData,setInitData] = useState({});
   const [searchResult,setSearchResult] = useState({
     doctors : [],
-    specialties : []
+    specialties : [],
+    clinics:[]
   });
 
   useEffect(() => {
@@ -102,7 +103,19 @@ export const HomeBanner = () => {
                 </Link>
               )}
           </ul>
-          }
+          }{searchResult.clinics&&searchResult.clinics.length>0&&
+            <ul>
+              <p>Chuyên khoa</p>
+                {searchResult.clinics.map((clinic,index)=>
+                  <Link key={index} to={`/clinic/${clinic.id}`}>
+                    <li>
+                      <img srcSet={`${clinic.image} 5x`} alt="" />
+                      {clinic.name}
+                    </li>
+                  </Link>
+                )}
+            </ul>
+            }
       </div>
   </div>
   <div className="list-service">

@@ -1,6 +1,7 @@
 package com.example.doctorappointment.service.impl;
 
 import com.example.doctorappointment.DTO.search.SearchOutputDTO;
+import com.example.doctorappointment.service.ClinicService;
 import com.example.doctorappointment.service.DoctorService;
 import com.example.doctorappointment.service.SearchService;
 import com.example.doctorappointment.service.SpecialtyService;
@@ -18,12 +19,15 @@ public class SearchServiceImpl implements SearchService {
     private DoctorService doctorService;
     @Autowired
     private SpecialtyService specialtyService;
+    @Autowired
+    private ClinicService clinicService;
     @Override
     public SearchOutputDTO search() {
         SearchOutputDTO output = new SearchOutputDTO();
 
         output.setDoctors(doctorService.findTop5());
         output.setSpecialties(specialtyService.findTop5());
+        output.setClinics(clinicService.findTop5());
 
         return output;
     }
@@ -34,7 +38,7 @@ public class SearchServiceImpl implements SearchService {
 
         output.setDoctors(doctorService.findByName(keyword));
         output.setSpecialties(specialtyService.search(keyword));
-
+        output.setClinics(clinicService.search(keyword));
         return output;
     }
 }

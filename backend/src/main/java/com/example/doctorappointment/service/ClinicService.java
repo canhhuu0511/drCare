@@ -2,6 +2,7 @@ package com.example.doctorappointment.service;
 
 import com.example.doctorappointment.DTO.clinic.ClinicDTO;
 import com.example.doctorappointment.DTO.clinic.ClinicReadDTO;
+import com.example.doctorappointment.DTO.doctor.DoctorReadDTO;
 import com.example.doctorappointment.DTO.specialty.SpecialtyDTO;
 import com.example.doctorappointment.DTO.specialty.SpecialtyReadDTO;
 import com.example.doctorappointment.entity.ClinicEntity;
@@ -22,6 +23,6 @@ public interface ClinicService {
 
     List<ClinicReadDTO> search(String systom);
     List<ClinicReadDTO> getAll();
-
+    List<ClinicReadDTO> findTop5();
 
 }

@@ -9,7 +9,7 @@ import { getOptionLabel } from "react-select/dist/Select-fd7cb895.cjs.prod";
 
 export const BlogsPage = () => {
   const [content, setContent] = useState(null);
-  const { state, pubDate } = useLocation();
+  const { state } = useLocation();
   const [date, setDate] = useState(null);
   const [index,setIndex] = useState(0);
 
@@ -25,7 +25,8 @@ export const BlogsPage = () => {
       });
 
     moment.locale("vi");
-    let date = moment(pubDate).format("dddd - DD/MM , h:mm");
+    console.log(state.date_time);
+    let date = moment(state.date_time).format("dddd - DD/MM , h:mm");
     setDate(date);
   }, []);
   useEffect(() => {
@@ -54,7 +55,7 @@ export const BlogsPage = () => {
             <div className="left-content">
               <Link to={"/"}>Trang chủ</Link>
               {" / "}
-              <Link to={"/blog"}>Tin tuc{index}</Link>
+              <Link to={"/blog"}>Tin tuc</Link>
               {" / "}
             </div>
             <div className="right-content">

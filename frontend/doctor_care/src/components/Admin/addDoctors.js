@@ -27,7 +27,11 @@ export default function AddDoctor() {
         role: null,
       },
     },
-    errors: {},
+    errors: {
+      user:{
+        email:""
+      }
+    },
   });
   const [fileupload,setFileupload] = useState(null);
   const [imageReview,setImageReview] = useState(null)
@@ -50,7 +54,6 @@ export default function AddDoctor() {
       });
   }, []);
 
-  // console.log(specialties);
 
   const handleChangeUserInput = (event) => {
     event.preventDefault();
@@ -125,7 +128,6 @@ export default function AddDoctor() {
     }
   };
 
-  console.log(state);
 
   return (
     <div
@@ -167,7 +169,7 @@ export default function AddDoctor() {
                     />
                     <div className="placeholder">Tên</div>
                     <span className="text-danger">
-                      {/* {this.state.errors.hinhAnh} */}
+                      {state.errors.firstName}
                     </span>
                   </div>
                 </div>
@@ -181,7 +183,7 @@ export default function AddDoctor() {
                     />
                     <div className="placeholder">Họ</div>
                     <span className="text-danger">
-                      {/* {this.state.errors.hinhAnh} */}
+                    {state.errors.lastName}
                     </span>
                   </div>
                 </div>
@@ -190,14 +192,24 @@ export default function AddDoctor() {
                 <div className="col-6">
                   <div className="textb">
                     <input
-                      type="text"
+                      type="number"
                       name="phone"
                       onChange={handleChangeInput}
+                      onBlur={()=>{if(state.values.phone.length<10){
+                        let newValues = {
+                          ...state.values
+                        };
+                        let newErrors = {
+                          ...state.errors,
+                          ["phone"]: "Số điện thoại không hợp lệ (không đủ 10 số) !",
+                        };
+                        setState({ values: newValues, errors: newErrors });
+                      }}}
                       required
                     />
                     <div className="placeholder">Số điện thoại</div>
                     <span className="text-danger">
-                      {/* {this.state.errors.hinhAnh} */}
+                      {state.errors.phone}
                     </span>
                   </div>
                 </div>
@@ -206,13 +218,30 @@ export default function AddDoctor() {
                     <input
                       type="text"
                       name="email"
-                      // value={state.values.user.email}
+                      onBlur={async()=>{
+                        await userService.existsUser(state.values.user.email).then((res)=>{
+                          if(res.data===true){
+                            let newErrors = {
+                              ...state.errors,
+                              ["user"]: { ...state.errors.user, ["email"]: "Email đã được đăng ký !" },
+                            };
+                            setState({ ...state, ["errors"]: newErrors });
+                          }else{
+                            let newErrors = {
+                              ...state.errors,
+                              ["user"]: { ...state.errors.user, ["email"]: "" },
+                            };
+                            setState({ ...state, ["errors"]: newErrors });
+                          }
+                        })
+                        .catch((e)=>console.log(e))
+                      }}
                       onChange={handleChangeUserInput}
                       required
                     />
                     <div className="placeholder">Email</div>
                     <span className="text-danger">
-                      {/* {this.state.errors.hinhAnh} */}
+                      {state.errors.user.email!==null?state.errors.user.email:""}
                     </span>
                   </div>
                 </div>
@@ -227,7 +256,7 @@ export default function AddDoctor() {
                     />
                     <div className="placeholder">Mật khẩu</div>
                     <span className="text-danger">
-                      {/* {this.state.errors.hinhAnh} */}
+                      {/* {state.values.user.password} */}
                     </span>
                   </div>
                 </div>
@@ -304,7 +333,7 @@ export default function AddDoctor() {
                                   }
                           type="file"
                           name="fileupload" />
-                    <button type="button" onClick={uploadFile} >upload</button>
+                    <button style={{display:"none"}} type="button" onClick={uploadFile} >upload</button>
                     <div className="placeholder">Ảnh đại diện</div>
                     {imageReview && <img style={{maxWidth:"200px"}} srcSet={`${imageReview} 10x`} alt="image" />}
                     <span className="text-danger">

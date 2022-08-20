@@ -1,5 +1,6 @@
 package com.example.doctorappointment.DTO.search;
 
+import com.example.doctorappointment.DTO.clinic.ClinicReadDTO;
 import com.example.doctorappointment.DTO.doctor.DoctorReadDTO;
 import com.example.doctorappointment.DTO.specialty.SpecialtyReadDTO;
 import lombok.AllArgsConstructor;
@@ -14,5 +15,5 @@ import java.util.List;
 public class SearchOutputDTO {
     List<DoctorReadDTO> doctors;
     List<SpecialtyReadDTO> specialties;
-//    List<ClinicDTO> clinics;
+    List<ClinicReadDTO> clinics;
 }
