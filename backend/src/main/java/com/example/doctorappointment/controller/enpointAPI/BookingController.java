@@ -43,6 +43,10 @@ public class BookingController {
         return ResponseEntity.ok().body(bookingService.findAll());
     }
 
+    @GetMapping("/doctor/{id}")
+    public ResponseEntity<List<BookingReadDTO>> findAllDoctorDate(@PathVariable int id) {
+        return ResponseEntity.ok().body(bookingService.findAllDoctorId(id));
+    }
 
     @PutMapping("/verify/{token}")
     public ResponseEntity<String> verifyBooking(@PathVariable String token){

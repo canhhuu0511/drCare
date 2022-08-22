@@ -8,19 +8,26 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import swal from "sweetalert";
-import { Paper } from "@material-ui/core";
-import "../../styles/admin/booking.scss";
+import { Card, Paper } from "@material-ui/core";
+import "../../styles/admin/booking_history.scss";
 import { bookingService } from "../../services/BookingService";
 import moment from "moment";
 import { VerifyBookingModal } from "./verifyBookingModal";
-
+import DatePicker from "react-datepicker";
 export const ManageBooking = () => {
   const [bookings, setBookings] = useState([]);
   const [doctorSelected, setDoctorSelected] = useState(null);
   const [clinicSelected, setClinicSelected] = useState(null);
-
+  const [data, setData] = useState([]);
+  const [dateSelected, setDateSelected] = useState(new Date());
   const [allDays, setAllDays] = useState([]);
   const currenUser = JSON.parse(localStorage.getItem("userLogin"));
+  const [schedule, setSchedule] = useState({
+    doctorId: "",
+    date: dateSelected.setHours(0, 0, 0, 0),
+    timeId: "",
+    name: "",
+  });
   const tabs = [
     {
       type: "NEW",
@@ -55,10 +62,19 @@ export const ManageBooking = () => {
         bookingService
           .getForDoctor(request, type)
           .then((result) => {
-            console.log(result.data);
             setBookings(result.data);
           })
           .catch((err) => alert("booking for doctor is null"));
+        bookingService.getForDoctorDateAsc(result.data.id).then((e) => {
+          const obj = e.data.reduce((group, item) => {
+            const { date } = item;
+            group[date] = group[date] ?? [];
+            group[date].push(item);
+            return group;
+          }, {});
+          const arr = Object.keys(obj).map((key) => [Number(key), obj[key]]);
+          setData(arr);
+        });
       });
     };
     const setClinic = async () => {
@@ -71,7 +87,6 @@ export const ManageBooking = () => {
         bookingService
           .getForClinic(request, type)
           .then((result) => {
-            console.log(result.data);
             setBookings(result.data);
           })
           .catch((err) => alert("booking for clinic is null"));
@@ -79,168 +94,69 @@ export const ManageBooking = () => {
     };
     if (currenUser.role.name == "DOCTOR") setDoctor();
     else setClinic();
-
-    createArrDate();
   }, [type]);
 
-  const createArrDate = () => {
-    let arrDate = [];
-    moment.locale("vi");
-    for (let i = 0; i < 7; i++) {
-      let object = {};
-      let lable = moment(new Date()).add(i, "days").format("dddd - DD/MM");
-      object.lable = lable.charAt(0).toUpperCase() + lable.slice(1);
-      object.value = moment(new Date()).add(i, "days").startOf("day").valueOf();
-
-      arrDate.push(object);
-    }
-    setAllDays(arrDate);
+  // let lable = moment(new Date()).add(i, "days").format("dddd - DD/MM");
+  // object.lable = lable.charAt(0).toUpperCase() + lable.slice(1);
+  // object.value = moment(new Date()).add(i, "days").startOf("day").valueOf();
+  const formatDate = (date) => {
+    let lable = moment(new Date(date)).format("dddd - DD/MM");
+    return lable.charAt(0).toUpperCase() + lable.slice(1);
   };
-  const handleSelectChange = (e) => {
-    const { value, lable } = e.target;
-    if (currenUser.role.name == "DOCTOR"){
-    let request = {
-      doctorId: doctorSelected.id,
-      date: value,
-    };
-    bookingService
-      .getForDoctor(request,type)
-      .then((result) => {
-        console.log(result.data);
-        setBookings(result.data);
-      })
-      .catch((err) => console.log(err));
-    }else{
-      let request = {
-        clinicId: clinicSelected.id,
-        date: value,
-      };
-      bookingService
-        .getForClinic(request,type)
-        .then((result) => {
-          console.log(result.data);
-          setBookings(result.data);
-        })
-        .catch((err) => console.log(err));
-    }
-  };
-  const handleConfirm = () => {};
+  const splitTime = (time) => time.split("-", 1);
+  const splitAddress = (address) => address.split(",", 1);
 
-  const renderListOfBooking = () => {
-    return (
-      bookings &&
-      bookings
-        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-        .map((booking) => {
-          return (
-            <TableRow hover role="checkbox" tabIndex={-1} key={booking.id}>
-              <TableCell>
-                <div className="news__description">{booking.time.name}</div>
-              </TableCell>
-              <TableCell>
-                <div className="news__description">
-                  {booking.patient.reason}
-                </div>
-              </TableCell>
-              <TableCell>{booking.patient.name}</TableCell>
-              <TableCell>{booking.patient.phone}</TableCell>
-              <TableCell>{booking.patient.email}</TableCell>
-              {/* <TableCell>
-                {booking.patient.address}
-              </TableCell> */}
-              <TableCell>{booking.patient.yearOfBirth}</TableCell>
-              <TableCell>
-                <button
-                  onClick={(e) => handleConfirm()}
-                  data-toggle="modal"
-                  data-target="#verifyBooking"
-                  className="btn"
-                >
-                  Xác nhận
-                </button>
-                <VerifyBookingModal
-                  bookingId={booking.id}
-                  patient={booking.patient}
-                ></VerifyBookingModal>
-              </TableCell>
-            </TableRow>
-          );
-        })
-    );
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-  return (
+  console.log(data);
+  return data && data.length > 0 ? (
     <Paper
-      className="booking-admin"
+      className="booking"
       style={{ width: "100%", marginTop: "4.5em", padding: "20px" }}
     >
-      <div className="header">
+      <div className="text-center">
         <h2>Quản lý lịch khám bệnh</h2>
       </div>
+      {data.map((arr, key) => (
+        <div className="card" key={key}>
+          <div className="card-header">{formatDate(arr[0])}</div>
+          <div className="card-body">
+            {arr[1].length > 0 &&
+              arr[1].map((e, key) => (
+                <blockquote key={key} className="block-quote">
+                  <div className="card-view">
+                    <div className="box1">
+                      {splitTime(e.time.name)}-{e.patient.name}
+                    </div>
+                    <div className="box2">
+                      {splitAddress(e.patient.address)}
+                    </div>
 
-      <ul className="nav nav-tabs" id="myTab" role="tablist">
-        {tabs.map((tab) => (
-          <li key={tab.type} className="nav-item">
-            <button
-              className={`nav-link ${tab.type == type ? "active" : ""}`}
-              onClick={() => {
-                setType(tab.type);
-              }}
-            >
-              {tab.name}
-            </button>
-          </li>
-        ))}
-      </ul>
-      <select
-        style={{ marginTop: "30px" }}
-        onChange={(e) => handleSelectChange(e)}
-        name=""
-        id=""
-      >
-        {allDays &&
-          allDays.length > 0 &&
-          allDays.map((e, index) => (
-            <option key={index} value={e.value}>
-              {e.lable}
-            </option>
-          ))}
-      </select>
-      <TableContainer style={{ maxHeight: "100%" }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Khung giờ</TableCell>
-              <TableCell>Lý do khám</TableCell>
-              <TableCell>Tên bệnh nhân</TableCell>
-              <TableCell>Số điện thoại</TableCell>
-              <TableCell>Email</TableCell>
-              {/* <TableCell>Địa chỉ</TableCell> */}
-              <TableCell>Năm sinh</TableCell>
-              <TableCell></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>{renderListOfBooking()}</TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[4, 10, 25]}
-        component="div"
-        count={bookings.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
-      />
+                    <div className="title">
+                      {e.patient.phone} - {doctorSelected.position} -{" "}
+                      {doctorSelected.lastName} -{" "}
+                      {doctorSelected.specialty.name}
+                    </div>
+                    <div className="reason">
+                      <div className="reason">{e.patient.reason}</div>
+                    </div>
+                  </div>
+                  <div className="dropdown">
+                    <select className="select">
+                      {tabs.map((table, key) => (
+                        <option key={key} value={table.type}>
+                          {" "}
+                          {table.name}
+                        </option>
+                      ))}
+                    </select>
+                    <DatePicker className="select-day" selected={arr[0]} />
+                  </div>
+                </blockquote>
+              ))}
+          </div>
+        </div>
+      ))}
     </Paper>
+  ) : (
+    <></>
   );
 };

@@ -25,6 +25,16 @@ export class BookingService {
       data: doctorDTO,
     });
   }
+  getForDoctorDateAsc(id) {
+    return axios({
+      url: `${domain}/booking/doctor/${id}`,
+      method: "GET",
+      headers:{
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+ 
+    });
+  }
   getForClinic(clinicDTO,status) {
     return axios({
       url: `${domain}/booking/clinic/${status}`,

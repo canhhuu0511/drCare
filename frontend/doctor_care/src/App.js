@@ -21,6 +21,7 @@ import {Support} from "./pages/support";
 import { ManageClinic } from "./components/Admin/clinic";
 import { ClinicPage } from "./pages/clinicInfo";
 
+
 function App() {
   const LoginPage = lazy(() =>
     import("./pages/login").then((module) => ({
@@ -41,6 +42,7 @@ function App() {
   const user = JSON.parse(localStorage.getItem("userLogin"));
   console.log(user);
   return (
+      
     <BrowserRouter>
       <Suspense fallback={<LoadingPage />}>
         <Routes>

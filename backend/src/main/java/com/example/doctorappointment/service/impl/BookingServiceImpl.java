@@ -119,6 +119,20 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
+    @Override
+    public List<BookingReadDTO> findAllDoctorId(int doctorId) {
+        List<BookingEntity> bookingEntities = bookingRepo.findAllByDoctorIdOrderByDateAsc( doctorId );
+        List<BookingReadDTO> bookingReadDTOS = new ArrayList<>();
+        if (bookingEntities != null) {
+            bookingEntities.forEach(bookingEntity -> {
+                bookingReadDTOS.add(convertToReadDTO(bookingEntity));
+            });
+            return bookingReadDTOS;
+        } else {
+            return null;
+        }
+    }
+
 
     private BookingDTO convertEntityToDTO(BookingEntity bookingEntity) {
         BookingDTO bookingDTO = mapper.map(bookingEntity, BookingDTO.class);

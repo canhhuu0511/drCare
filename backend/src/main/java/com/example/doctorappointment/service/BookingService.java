@@ -16,5 +16,7 @@ public interface BookingService {
     List<BookingReadDTO> findAllByDoctorIdAndDate(Date date, int doctorId,String status);
     List<BookingReadDTO> findAllByClinicIdAndDate(Date date, int clinicId,String status);
 
+    List<BookingReadDTO> findAllDoctorId( int doctorId);
+
 
 }

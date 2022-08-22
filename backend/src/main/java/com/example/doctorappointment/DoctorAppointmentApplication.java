@@ -76,7 +76,7 @@ public class DoctorAppointmentApplication {
 //            systom4.add("Ngứa họng");
 //            systom4.add("Nghẹt mũi , chảy nước mũi ");
 //
-////            ClinicMarkdownEntity clinicMarkdownEntity = new ClinicMarkdownEntity(0,"","","","",0);
+//            ClinicMarkdownEntity clinicMarkdownEntity = new ClinicMarkdownEntity(0,"","","","",0);
 //            ClinicEntity clinic = clinicRepo.save(new ClinicEntity(0, "Bệnh viện Hữu nghị Việt Đức", "34 Đại Cồ Việt, Hai Bà Trưng, Hà Nội", null, "https://cdn.bookingcare.vn/fr/w500/2020/06/03/114348-bv-viet-duc.jpg",0,new ArrayList<SpecialtyEntity>()));
 //            SpecialtyEntity specialty1 = new SpecialtyEntity(0, "Cơ xương khớp", "co xuong khop", "https://cdn.bookingcare.vn/fr/w300/2019/12/13/120331-co-xuong-khop.jpg", null,null,systom1,null);
 //
